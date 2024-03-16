@@ -1,15 +1,11 @@
 const BlockedKeywords = require("../modals/blockedkeywords");
-const Timer = require("../modals/timer")
 const {
     EmbedBuilder
 } = require("discord.js");
 
-let intervalId = null;
-
 async function removeRolesFromMember(member, roleIds) {
     try {
         await member.roles.remove(roleIds);
-        console.log(`Roles removed from member ${member.user.tag}`);
     } catch (error) {
         console.error('Error removing roles:', error);
         throw new Error('An error occurred while removing roles.');
@@ -18,7 +14,6 @@ async function removeRolesFromMember(member, roleIds) {
 
 async function fetchMember(guild, memberId) {
     try {
-        console.log(`Fetching member with ID: ${memberId}`);
         return await guild.members.fetch(memberId);
     } catch (error) {
         console.error('Error fetching member:', error);
@@ -41,7 +36,6 @@ async function checkBlockedWords(message, userId) {
         const blockedWord = wordObj.word.toLowerCase();
 
         if (content.includes(blockedWord)) {
-            console.log(`Blocked word "${blockedWord}" found in message.`);
             return true;
         }
     }
@@ -49,7 +43,6 @@ async function checkBlockedWords(message, userId) {
 }
 
 const replyWithEmbed = (interaction, description, color = "Purple") => {
-    console.log('Replying with embed...');
     interaction.reply({
         embeds: [
             new EmbedBuilder()
@@ -60,7 +53,6 @@ const replyWithEmbed = (interaction, description, color = "Purple") => {
 };
 
 const sendEmbedMessage = async (channel, description, username, avatarURL) => {
-    console.log('Sending embed message...');
     const embed = new EmbedBuilder()
         .setDescription(description)
         .setColor("Purple")
